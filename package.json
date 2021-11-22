@@ -1,0 +1,40 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio built using Phaser and phaser-project-template-es6",
+  "homepage": "https://github.com/ericlyeric/portfolio",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config webpack/webpack.dev.js",
+    "build": "webpack --config webpack/webpack.prod.js",
+    "bundle": "npm run build",
+    "serve": "serve dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ericlyeric/portfolio.git"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-class-properties": "^7.16.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.16.4",
+    "babel-loader": "^8.2.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^5.1.2",
+    "html-webpack-plugin": "^4.5.2",
+    "serve": "^13.0.2",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0",
+    "webpack-merge": "^5.8.0",
+    "webpack-obfuscator": "^2.6.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "phaser": "^3.55.2"
+  }
+}
