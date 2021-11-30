@@ -8,7 +8,7 @@ class ControlPlayer extends Phaser.GameObjects.Image {
       .setAlpha(0.5)
       .setRotation(config.rotation)
       .setScrollFactor(0)
-      .setScale(0.25);
+      .setScale(0.4);
 
     this.type = config.type;
 
@@ -23,8 +23,8 @@ export default class Controls {
   upIsDown;
   buttons = {};
 
-  _width = 48;
-  _height = 48;
+  _width = 76.8;
+  _height = 76.8;
   _scene;
   _config = [];
 
@@ -53,12 +53,12 @@ export default class Controls {
   adjustPositions() {
     let width = this._scene.cameras.main.width;
     let height = this._scene.cameras.main.height;
-    this.buttons.left.x = 30;
-    this.buttons.left.y = height - 25;
-    this.buttons.right.x = 30 * 3;
-    this.buttons.right.y = height - 25;
-    this.buttons.up.x = width - 50;
-    this.buttons.up.y = height - 25;
+    this.buttons.left.x = 45;
+    this.buttons.left.y = height - 45;
+    this.buttons.right.x = 45 * 3;
+    this.buttons.right.y = height - 45;
+    this.buttons.up.x = width - 45;
+    this.buttons.up.y = height - 45;
   }
 
   update() {
