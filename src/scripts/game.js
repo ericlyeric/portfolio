@@ -6,11 +6,11 @@ const DEFAULT_WIDTH = 640;
 const DEFAULT_HEIGHT = 360;
 const MAX_WIDTH = DEFAULT_WIDTH * 1.5;
 const MAX_HEIGHT = DEFAULT_HEIGHT * 1.5;
-const SCALE_MODE = 'FIT'; // FIT OR SMOOTH
+const SCALE_MODE = 'SMOOTH'; // FIT OR SMOOTH
 
 window.addEventListener('load', () => {
   const CONFIG = {
-    type: Phaser.AUTO,
+    type: Phaser.WEBGL,
     backgroundColor: '#ffffff',
     parent: 'phaser-game',
     scale: {

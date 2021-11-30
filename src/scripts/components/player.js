@@ -2,9 +2,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   playerSpeed = 95;
   jumpSpeed = 280;
 
-  keyW;
-  keyA;
-  keyD;
+  footsteps;
+  jump;
 
   constructor(scene, player, mapSize) {
     super(scene, player.x, player.y, 'player');
@@ -43,6 +42,26 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       frames: [{ key: 'player', frame: 1 }],
       frameRate: 1,
     });
+
+    this.footsteps = scene.sound.add('footsteps', {
+      mute: false,
+      volume: 0.4,
+      rate: 4,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0,
+    });
+
+    this.jump = scene.sound.add('jump', {
+      mute: false,
+      volume: 0.1,
+      rate: 2.5,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0,
+    });
   }
 
   kill() {
@@ -76,11 +95,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityX(-this.playerSpeed);
       if (this.body.onFloor()) {
         this.anims.play('run', true);
+        if (!this.footsteps.isPlaying) {
+          this.footsteps.play();
+        }
       }
     } else if (cursors.right.isDown || controls.rightIsDown) {
       this.setVelocityX(this.playerSpeed);
       if (this.body.onFloor()) {
         this.anims.play('run', true);
+        if (!this.footsteps.isPlaying) {
+          this.footsteps.play();
+        }
       }
     } else {
       this.setVelocityX(0);
@@ -103,6 +128,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     ) {
       this.setVelocityY(-this.jumpSpeed);
       this.anims.play('jump', true);
+      if (!this.jump.isPlaying) {
+        this.jump.play();
+      }
     }
 
     // If the player is moving to the right, keep them facing forward
