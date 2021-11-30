@@ -1,27 +1,40 @@
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
-    super({ key: 'PreloadScene' })
+    super({ key: 'PreloadScene' });
   }
 
   preload() {
-    this.load.image('phaser-logo', 'assets/img/phaser-logo.png')
+    const images = [
+      'tile-left-ground',
+      'tile-middle-ground',
+      'tile-right-ground',
+      'tile-left-ground-fill',
+      'tile-middle-ground-fill',
+      'tile-right-ground-fill',
+      'tile-left-ground-connect',
+      'tile-right-ground-connect',
+      'tile-left-float',
+      'tile-middle-float',
+      'tile-right-float',
+      'tile-float',
+      'controls',
+      'background',
+      'goal',
+    ];
+    images.forEach((img) => {
+      this.load.image(img, `assets/img/${img}.png`);
+    });
+    this.load.spritesheet('coin', 'assets/img/coin.png', {
+      frameHeight: 16,
+      frameWidth: 16,
+    });
+    this.load.spritesheet('player', 'assets/animations/player.png', {
+      frameWidth: 32,
+      frameHeight: 29,
+    });
   }
 
   create() {
-    this.scene.start('MainScene')
-
-    /**
-     * This is how you would dynamically import the mainScene class (with code splitting),
-     * add the mainScene to the Scene Manager
-     * and start the scene.
-     * The name of the chunk would be 'mainScene.chunk.js
-     * Find more about code splitting here: https://webpack.js.org/guides/code-splitting/
-     */
-    // let someCondition = true
-    // if (someCondition)
-    //   import(/* webpackChunkName: "mainScene" */ './mainScene').then(mainScene => {
-    //     this.scene.add('MainScene', mainScene.default, true)
-    //   })
-    // else console.log('The mainScene class will not even be loaded by the browser')
+    this.scene.start('MainScene');
   }
 }
