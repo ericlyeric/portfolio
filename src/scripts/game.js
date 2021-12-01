@@ -12,7 +12,7 @@ window.addEventListener('load', () => {
   const CONFIG = {
     type: Phaser.WEBGL,
     backgroundColor: '#ffffff',
-    parent: 'phaser-game',
+    parent: 'portfolio',
     scale: {
       // The game will be scaled manually in the resize()
       mode: Phaser.Scale.NONE,

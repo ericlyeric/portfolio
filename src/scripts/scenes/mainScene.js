@@ -2,10 +2,9 @@ import { Map } from '../components/map';
 import Background from '../components/background';
 import Tiles from '../components/tiles';
 import Player from '../components/player';
-import PhaserVersionText from '../components/version';
 import Objectives from '../components/objectives';
 import Controls from '../components/controls';
-import Score from '../components/score';
+import ToggleSound from '../components/toggleSound';
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -57,15 +56,8 @@ export default class MainScene extends Phaser.Scene {
       map.info.filter((el) => el.type === 'objective')
     );
     this.controls = new Controls(this);
-    // const levelText = new LevelText(this, this.level)
-    const phaserVersion = new PhaserVersionText(
-      this,
-      0,
-      0,
-      `Phaser v${Phaser.VERSION}`
-    );
 
-    this.score = new Score(this, 0, 0, 3);
+    this.toggleSound = new ToggleSound(this, 0, 0, 'sound:on');
 
     this.cameras.main.startFollow(this.player);
 
@@ -90,8 +82,7 @@ export default class MainScene extends Phaser.Scene {
     // the resize function
     const resize = () => {
       this.controls.adjustPositions();
-      phaserVersion.x = this.cameras.main.width - 15;
-      phaserVersion.y = 15;
+      this.toggleSound.adjustPosition();
       this.background.adjustPosition();
       // levelText.adjustPosition()
     };
@@ -99,7 +90,6 @@ export default class MainScene extends Phaser.Scene {
     this.scale.on('resize', (gameSize) => {
       this.cameras.main.width = gameSize.width;
       this.cameras.main.height = gameSize.height;
-      // this.cameras.resize(gameSize.width, gameSize.height);
       resize();
     });
     resize();
@@ -109,10 +99,5 @@ export default class MainScene extends Phaser.Scene {
     this.background.parallax();
     this.controls.update();
     this.player.update(this.cursors, this.controls, this.sound);
-
-    // if (this.gameOver)
-    // {
-    //     return;
-    // }
   }
 }

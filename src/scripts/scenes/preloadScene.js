@@ -32,6 +32,7 @@ export default class PreloadScene extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 29,
     });
+
     this.load.audio('background-song', ['assets/audio/background-song.ogg']);
     this.load.audio('footsteps', ['assets/audio/footstep.ogg']);
     this.load.audio('jump', ['assets/audio/jump.ogg']);
