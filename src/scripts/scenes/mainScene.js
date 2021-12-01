@@ -3,8 +3,9 @@ import Background from '../components/background';
 import Tiles from '../components/tiles';
 import Player from '../components/player';
 import PhaserVersionText from '../components/version';
-import Coins from '../components/coin';
+import Objectives from '../components/objectives';
 import Controls from '../components/controls';
+import Score from '../components/score';
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -13,6 +14,12 @@ export default class MainScene extends Phaser.Scene {
 
   create() {
     const map = new Map();
+
+    const music = this.sound.add('background-song', {
+      volume: 0.25,
+      loop: true,
+    });
+    music.play();
 
     this.cameras.main.setBackgroundColor('#ade6ff');
     this.cameras.main.fadeIn();
@@ -45,9 +52,9 @@ export default class MainScene extends Phaser.Scene {
       map.info.filter((el) => el.type === 'player')[0],
       map.size
     );
-    const coins = new Coins(
+    const objectives = new Objectives(
       this,
-      map.info.filter((el) => el.type === 'coin')
+      map.info.filter((el) => el.type === 'objective')
     );
     this.controls = new Controls(this);
     // const levelText = new LevelText(this, this.level)
@@ -58,12 +65,14 @@ export default class MainScene extends Phaser.Scene {
       `Phaser v${Phaser.VERSION}`
     );
 
+    this.score = new Score(this, 0, 0, 3);
+
     this.cameras.main.startFollow(this.player);
 
     this.physics.add.collider(this.tiles, this.player);
 
-    this.physics.add.overlap(this.player, coins, (player, coin) =>
-      coin.collect()
+    this.physics.add.overlap(this.player, objectives, (player, objective) =>
+      objective.collect()
     );
 
     // remove the loading screen
@@ -90,7 +99,7 @@ export default class MainScene extends Phaser.Scene {
     this.scale.on('resize', (gameSize) => {
       this.cameras.main.width = gameSize.width;
       this.cameras.main.height = gameSize.height;
-      //this.cameras.resize(gameSize.width, gameSize.height)
+      // this.cameras.resize(gameSize.width, gameSize.height);
       resize();
     });
     resize();
@@ -99,7 +108,8 @@ export default class MainScene extends Phaser.Scene {
   update() {
     this.background.parallax();
     this.controls.update();
-    this.player.update(this.cursors, this.controls);
+    this.player.update(this.cursors, this.controls, this.sound);
+
     // if (this.gameOver)
     // {
     //     return;

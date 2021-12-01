@@ -4,6 +4,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   footsteps;
   jump;
+  die;
 
   constructor(scene, player, mapSize) {
     super(scene, player.x, player.y, 'player');
@@ -44,23 +45,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     });
 
     this.footsteps = scene.sound.add('footsteps', {
-      mute: false,
       volume: 0.4,
       rate: 4,
-      detune: 0,
-      seek: 0,
-      loop: false,
-      delay: 0,
     });
 
     this.jump = scene.sound.add('jump', {
-      mute: false,
       volume: 0.1,
       rate: 2.5,
-      detune: 0,
-      seek: 0,
-      loop: false,
-      delay: 0,
+    });
+
+    this.die = scene.sound.add('die', {
+      volume: 0.35,
+      rate: 1.25,
     });
   }
 
@@ -68,28 +64,29 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this._dead = true;
 
     // animate the camera if the player dies
-    this.scene.cameras.main.shake(500, 0.025);
+    // this.scene.sound.stop = true;
+    if (!this.die.isPlaying) {
+      this.die.play();
+    }
+    this.scene.cameras.main.shake(750, 0.025);
     this.scene.time.addEvent({
-      delay: 500,
+      delay: 2000,
       callback: () => this.scene.scene.restart(),
     });
   }
 
-  halt() {
-    this.body.enable = false;
-    this._halt = true;
-  }
-
-  update(cursors, controls) {
-    if (this._halt || this._dead) return;
+  update(cursors, controls, sound) {
+    if (this._dead) return;
 
     // check if out of camera and kill
     if (
       this.body.right < this.mapSize.x ||
       this.body.left > this.mapSize.width ||
       this.body.top > this.mapSize.height
-    )
+    ) {
+      sound.removeByKey('background-song');
       this.kill();
+    }
 
     if (cursors.left.isDown || controls.leftIsDown) {
       this.setVelocityX(-this.playerSpeed);

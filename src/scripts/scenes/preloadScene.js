@@ -24,7 +24,7 @@ export default class PreloadScene extends Phaser.Scene {
     images.forEach((img) => {
       this.load.image(img, `assets/img/${img}.png`);
     });
-    this.load.spritesheet('coin', 'assets/img/coin.png', {
+    this.load.spritesheet('objective', 'assets/img/coin.png', {
       frameHeight: 16,
       frameWidth: 16,
     });
@@ -35,15 +35,11 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.audio('background-song', ['assets/audio/background-song.ogg']);
     this.load.audio('footsteps', ['assets/audio/footstep.ogg']);
     this.load.audio('jump', ['assets/audio/jump.ogg']);
+    this.load.audio('die', ['assets/audio/die.ogg']);
+    this.load.audio('objective', ['assets/audio/objective.ogg']);
   }
 
   create() {
-    const backgroundMusic = this.sound.add('background-song', {
-      volume: 0.25,
-      loop: true,
-    });
-    backgroundMusic.play();
-
     this.scene.start('MainScene');
   }
 }
