@@ -20,6 +20,9 @@ export default class PreloadScene extends Phaser.Scene {
       'controls',
       'background',
       'goal',
+      'dialog-box',
+      'dialog-box-big',
+      'qr-code',
     ];
     images.forEach((img) => {
       this.load.image(img, `assets/img/${img}.png`);

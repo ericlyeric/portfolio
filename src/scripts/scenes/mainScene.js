@@ -5,6 +5,7 @@ import Player from '../components/player';
 import Objectives from '../components/objectives';
 import Controls from '../components/controls';
 import ToggleSound from '../components/toggleSound';
+import InstructionsDialogBox from '../components/instructionsDialogBox';
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -59,6 +60,24 @@ export default class MainScene extends Phaser.Scene {
 
     this.toggleSound = new ToggleSound(this, 0, 0, 'sound:on');
 
+    if (!this.sys.game.device.input.touch) {
+      this.instructionsDialogBox = new InstructionsDialogBox(
+        this,
+        0,
+        0,
+        'dialog-box-big',
+        'left/right: ←/→ jump: ↑ or spacebar\n--Press any of the above keys to start--\n\nTo play on mobile scan the qr code below'
+      );
+    } else {
+      this.instructionsDialogBox = new InstructionsDialogBox(
+        this,
+        0,
+        0,
+        'dialog-box-big',
+        'Use the buttons below\n--Tap any key below to start--\nChallenge a colleague/friend'
+      );
+    }
+
     this.cameras.main.startFollow(this.player);
 
     this.physics.add.collider(this.tiles, this.player);
@@ -84,6 +103,10 @@ export default class MainScene extends Phaser.Scene {
       this.controls.adjustPositions();
       this.toggleSound.adjustPosition();
       this.background.adjustPosition();
+      this.instructionsDialogBox.adjustPosition(
+        this.scale.gameSize.width / 2,
+        this.scale.gameSize.height / 2
+      );
       // levelText.adjustPosition()
     };
 
@@ -99,5 +122,6 @@ export default class MainScene extends Phaser.Scene {
     this.background.parallax();
     this.controls.update();
     this.player.update(this.cursors, this.controls, this.sound);
+    this.instructionsDialogBox.update(this.cursors, this.controls);
   }
 }
