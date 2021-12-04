@@ -24,14 +24,15 @@ export default class PreloadScene extends Phaser.Scene {
       'dialog-box-big',
       'qr-code',
     ];
-    images.forEach((img) => {
-      this.load.image(img, `assets/img/${img}.png`);
+    images.forEach((image) => {
+      this.load.image(image, `assets/images/${image}.png`);
     });
-    this.load.spritesheet('objective', 'assets/img/coin.png', {
+
+    this.load.spritesheet('objective', 'assets/spritesheets/coin.png', {
       frameHeight: 16,
       frameWidth: 16,
     });
-    this.load.spritesheet('player', 'assets/animations/player.png', {
+    this.load.spritesheet('player', 'assets/spritesheets/player.png', {
       frameWidth: 32,
       frameHeight: 29,
     });

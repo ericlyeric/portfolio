@@ -1,4 +1,4 @@
-class Objective extends Phaser.Physics.Arcade.Sprite {
+export class Objective extends Phaser.Physics.Arcade.Sprite {
   sound;
 
   constructor(scene, config) {
@@ -25,7 +25,7 @@ class Objective extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
-  collect() {
+  collect(dialogBox) {
     if (this.collecting) return;
     this.collecting = true;
     this.sound.play();
@@ -37,10 +37,16 @@ class Objective extends Phaser.Physics.Arcade.Sprite {
       ease: 'Linear',
       onComplete: this.destroy.bind(this),
     });
+    dialogBox.setVisible(true);
+    dialogBox.dialog.setVisible(true);
+    dialogBox.info.setVisible(true);
+    dialogBox.close.setVisible(true);
   }
 }
 
 export default class Objectives extends Phaser.GameObjects.Group {
+  counter = 0;
+
   constructor(scene, tiles) {
     super(scene);
 

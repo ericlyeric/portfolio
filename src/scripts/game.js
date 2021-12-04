@@ -14,7 +14,6 @@ window.addEventListener('load', () => {
     backgroundColor: '#ffffff',
     parent: 'portfolio',
     scale: {
-      // The game will be scaled manually in the resize()
       mode: Phaser.Scale.NONE,
       width: DEFAULT_WIDTH,
       height: DEFAULT_HEIGHT,
@@ -31,7 +30,7 @@ window.addEventListener('load', () => {
 
   const game = new Phaser.Game(CONFIG);
 
-  // the custom resize function
+  // the resize function
   const resize = () => {
     const w = window.innerWidth;
     const h = window.innerHeight;

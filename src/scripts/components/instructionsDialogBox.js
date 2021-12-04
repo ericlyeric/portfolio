@@ -1,18 +1,10 @@
-export default class InstructionsDialogBox extends Phaser.GameObjects.Image {
-  dialog;
+import DialogBox from './dialogBox';
+
+export default class InstructionsDialogBox extends DialogBox {
   qr;
 
   constructor(scene, x, y, key, text) {
-    super(scene, x, y, key);
-    scene.add.existing(this);
-
-    this.setOrigin(0.5).setScrollFactor(0);
-    this.setScale(1.5);
-    this.alpha = 0.65;
-
-    this.dialog = this.scene.add.text(x, y, text, { color: 'black' });
-    this.dialog.setOrigin(0.5, 0.8).setScrollFactor(0);
-    this.dialog.setWordWrapWidth(this.width * 1.3);
+    super(scene, x, y, key, text);
 
     this.qr = scene.add.image(0, 0, 'qr-code');
     this.qr.setOrigin(0.5, 0).setScrollFactor(0);
@@ -20,12 +12,12 @@ export default class InstructionsDialogBox extends Phaser.GameObjects.Image {
   }
 
   adjustPosition(scaleX, scaleY) {
-    this.x = scaleX;
-    this.y = scaleY;
-    this.dialog.x = scaleX;
-    this.dialog.y = scaleY * 0.65;
-    this.qr.x = scaleX;
-    this.qr.y = this.dialog.y * 1.2;
+    this.setX(scaleX);
+    this.setY(scaleY);
+    this.dialog.setX(scaleX);
+    this.dialog.setY(scaleY * 0.65);
+    this.qr.setX(scaleX);
+    this.qr.setY(this.dialog.y * 1.2);
   }
 
   update(cursors, controls) {
