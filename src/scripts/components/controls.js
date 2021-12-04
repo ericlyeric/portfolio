@@ -7,9 +7,7 @@ class ControlPlayer extends Phaser.GameObjects.Image {
       .setY(y)
       .setAlpha(0.5)
       .setRotation(config.rotation)
-      .setScrollFactor(0)
-      .setScale(0.4);
-
+      .setScrollFactor(0);
     this.type = config.type;
 
     // hide control on non-touch devices
