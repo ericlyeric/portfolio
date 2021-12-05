@@ -3,6 +3,7 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
 const JavaScriptObfuscator = require('webpack-obfuscator');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const prod = {
   mode: 'production',
@@ -18,6 +19,7 @@ const prod = {
         },
       },
     },
+    minimizer: [new UglifyJsPlugin()],
   },
   plugins: [
     new CleanWebpackPlugin({
