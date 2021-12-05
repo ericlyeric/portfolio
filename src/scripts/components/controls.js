@@ -48,7 +48,7 @@ export default class Controls {
     });
   }
 
-  adjustPositions() {
+  adjustPosition() {
     let width = this._scene.cameras.main.width;
     let height = this._scene.cameras.main.height;
     this.buttons.left.x = 45;

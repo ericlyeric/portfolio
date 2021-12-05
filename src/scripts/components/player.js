@@ -1,11 +1,4 @@
 export default class Player extends Phaser.Physics.Arcade.Sprite {
-  playerSpeed = 95;
-  jumpSpeed = 280;
-
-  footsteps;
-  jump;
-  die;
-
   constructor(scene, player, mapSize) {
     super(scene, player.x, player.y, 'player');
     scene.add.existing(this);
@@ -13,6 +6,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.scene = scene;
     this.mapSize = mapSize;
+
+    this.playerSpeed = 95;
+    this.jumpSpeed = 280;
+    this.footsteps;
+    this.jump;
+    this.die;
 
     this.setOrigin(0, 1);
     this.setScale(1);
@@ -106,8 +105,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       }
     } else {
       this.setVelocityX(0);
-      // Only show the idle animation if the player is footed
-      // If this is not included, the player would look idle while jumping
       if (this.body.onFloor()) {
         this.anims.play('idle', true);
       }
@@ -117,8 +114,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.anims.play('fall', true);
     }
 
-    // Player can jump while walking any direction by pressing the space bar
-    // or the 'UP' arrow
     if (
       (cursors.space.isDown || cursors.up.isDown || controls.upIsDown) &&
       this.body.onFloor()

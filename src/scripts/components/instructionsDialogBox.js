@@ -1,14 +1,17 @@
 import DialogBox from './dialogBox';
 
 export default class InstructionsDialogBox extends DialogBox {
-  qr;
-
   constructor(scene, x, y, key, text) {
     super(scene, x, y, key, text);
 
     this.qr = scene.add.image(0, 0, 'qr-code');
     this.qr.setOrigin(0.5, 0).setScrollFactor(0);
     this.qr.setScale(0.6);
+
+    this.setVisible(true);
+    this.dialog.setVisible(true);
+    this.info.setVisible(true);
+    this.close.setVisible(true);
   }
 
   adjustPosition(scaleX, scaleY) {

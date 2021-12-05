@@ -19,7 +19,6 @@ export default class PreloadScene extends Phaser.Scene {
       'tile-float',
       'controls',
       'background',
-      'goal',
       'dialog-box',
       'dialog-box-big',
       'qr-code',

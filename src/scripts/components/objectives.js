@@ -26,6 +26,8 @@ export class Objective extends Phaser.Physics.Arcade.Sprite {
   }
 
   collect(dialogBox) {
+    // animation
+    console.log(dialogBox);
     if (this.collecting) return;
     this.collecting = true;
     this.sound.play();
@@ -37,19 +39,20 @@ export class Objective extends Phaser.Physics.Arcade.Sprite {
       ease: 'Linear',
       onComplete: this.destroy.bind(this),
     });
-    dialogBox.setVisible(true);
-    dialogBox.dialog.setVisible(true);
-    dialogBox.info.setVisible(true);
+
+    // display dialog
+    dialogBox.frame.setVisible(true);
+    dialogBox.body.setVisible(true);
+    dialogBox.link.setVisible(true);
     dialogBox.close.setVisible(true);
   }
 }
 
 export default class Objectives extends Phaser.GameObjects.Group {
-  counter = 0;
-
   constructor(scene, tiles) {
     super(scene);
 
+    console.log(this);
     tiles.forEach((tile) => {
       this.add(new Objective(scene, tile));
     });

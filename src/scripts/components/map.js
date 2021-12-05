@@ -19,13 +19,6 @@ const level = [
   ' <======>  <==========>   <>  <>  <>  <>    <======> ',
 ]
 
-// need to fix the map scaling
-// include github, linkedin, resume, about me
-// do about me first O
-// do resume after on right side
-// do linkedin next
-// do github at the end
-
 export class Map {
   constructor() {
     const TILE_SIZE = 16;

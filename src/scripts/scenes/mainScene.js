@@ -1,13 +1,14 @@
 import { Map } from '../components/map';
 import Background from '../components/background';
+import Music from '../components/music';
 import Tiles from '../components/tiles';
 import Player from '../components/player';
 import Objectives from '../components/objectives';
 import Controls from '../components/controls';
-import ToggleSound from '../components/toggleSound';
-import InstructionsDialogBox from '../components/instructionsDialogBox';
-import { dialogLink, dialogText } from '../utils/dialogText';
-import DialogBox from '../components/dialogBox';
+import DialogBox, { DialogBoxInstructions } from '../components/dialogBox';
+import { dialogInfo, dialogLink, dialogText } from '../utils/dialogText';
+import { resizeObjects } from '../utils/helper';
+import { textConfig } from '../utils/config';
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -16,14 +17,12 @@ export default class MainScene extends Phaser.Scene {
 
   create() {
     const map = new Map();
-
     this.physics.world.setBounds(
       map.size.x,
       map.size.y,
       map.size.width,
       map.size.height
     );
-
     this.background = new Background(this);
     this.tiles = new Tiles(
       this,
@@ -39,64 +38,86 @@ export default class MainScene extends Phaser.Scene {
       map.size.height
     );
 
-    const music = this.sound.add('background-song', {
+    this.music = new Music(this, 'background-song', {
       volume: 0.25,
       loop: true,
     });
-    music.play();
 
     //  Input Events
     this.input.addPointer(1);
     this.cursors = this.input.keyboard.createCursorKeys();
-    // this.goal = new GoalSprite(this, map.info.filter((el: TilesConfig) => el.type === 'goal')[0])
     this.player = new Player(
       this,
       map.info.filter((el) => el.type === 'player')[0],
       map.size
     );
-    const objectives = new Objectives(
+    this.objectives = new Objectives(
       this,
       map.info.filter((el) => el.type === 'objective')
     );
     this.controls = new Controls(this);
-    this.toggleSound = new ToggleSound(this, 0, 0, 'sound:on');
 
     if (!this.sys.game.device.input.touch) {
-      this.instructionsDialogBox = new InstructionsDialogBox(
+      this.dialogBoxInstructions = new DialogBoxInstructions(
         this,
         0,
         0,
         'dialog-box-big',
         dialogText.pc,
-        dialogLink
+        textConfig
       );
     } else {
-      this.instructionsDialogBox = new InstructionsDialogBox(
+      this.dialogBoxInstructions = new DialogBoxInstructions(
         this,
         0,
         0,
         'dialog-box-big',
-        dialogText.mobile
+        dialogText.mobile,
+        textConfig
       );
     }
-
     this.dialogBox1 = new DialogBox(
       this,
       0,
       0,
       'dialog-box-big',
       dialogText.objective1,
-      dialogLink.objective1
+      textConfig,
+      dialogInfo.objective1,
+      dialogLink.objective1,
+      0.16
     );
-    this.dialogBox1.setVisible(false);
-    this.dialogBox1.dialog.setVisible(false);
-    this.dialogBox1.info.setVisible(false);
-    this.dialogBox1.close.setVisible(false);
+    this.dialogBox2 = new DialogBox(
+      this,
+      0,
+      0,
+      'dialog-box-big',
+      dialogText.objective2,
+      textConfig,
+      dialogInfo.objective2,
+      dialogLink.objective2,
+      0.8
+    );
+    this.dialogBox3 = new DialogBox(
+      this,
+      0,
+      0,
+      'dialog-box-big',
+      dialogText.objective3,
+      textConfig,
+      dialogInfo.objective3,
+      dialogLink.objective3,
+      0.43
+    );
+    // this.goal = new GoalSprite(this, map.info.filter((el: TilesConfig) => el.type === 'goal')[0])
 
+    // console.log(this.objectives);
     this.cameras.main.startFollow(this.player);
     this.physics.add.collider(this.tiles, this.player);
-    this.physics.add.overlap(this.player, objectives, (player, objective) =>
-      objective.collect(this.dialogBox1)
+    this.physics.add.overlap(
+      this.player,
+      this.objectives,
+      (player, objective) => objective.collect(this.dialogBox1)
     );
 
     // remove the loading screen
@@ -111,35 +132,36 @@ export default class MainScene extends Phaser.Scene {
       });
     }
 
-    // the resize function
-    const resize = () => {
-      this.controls.adjustPositions();
-      this.toggleSound.adjustPosition();
-      this.background.adjustPosition();
-      this.instructionsDialogBox.adjustPosition(
-        this.scale.gameSize.width / 2,
-        this.scale.gameSize.height / 2
-      );
-      this.dialogBox1.adjustPosition(
-        this.scale.gameSize.width / 2,
-        this.scale.gameSize.height / 2
-      );
-      // levelText.adjustPosition()
-    };
-
     this.scale.on('resize', (gameSize) => {
       this.cameras.main.width = gameSize.width;
       this.cameras.main.height = gameSize.height;
-      resize();
+      resizeObjects({
+        scale: this.scale,
+        controls: this.controls,
+        sound: this.music.toggle,
+        background: this.background,
+        dialogBoxInstructions: this.dialogBoxInstructions,
+        dialogBox1: this.dialogBox1,
+        dialogBox2: this.dialogBox2,
+        dialogBox3: this.dialogBox3,
+      });
     });
-    resize();
+    resizeObjects({
+      scale: this.scale,
+      controls: this.controls,
+      sound: this.music.toggle,
+      background: this.background,
+      dialogBoxInstructions: this.dialogBoxInstructions,
+      dialogBox1: this.dialogBox1,
+      dialogBox2: this.dialogBox2,
+      dialogBox3: this.dialogBox3,
+    });
   }
 
   update() {
     this.background.parallax();
     this.controls.update();
     this.player.update(this.cursors, this.controls, this.sound);
-    this.instructionsDialogBox.update(this.cursors, this.controls);
-    this.dialogBox1.update();
+    this.dialogBoxInstructions.update(this.cursors, this.controls);
   }
 }
