@@ -1,6 +1,4 @@
 export class Objective extends Phaser.Physics.Arcade.Sprite {
-  sound;
-
   constructor(scene, config) {
     super(scene, config.x, config.y, config.texture);
     scene.add.existing(this);
@@ -8,7 +6,6 @@ export class Objective extends Phaser.Physics.Arcade.Sprite {
 
     this.setImmovable();
     this.setScale(1);
-    // @ts-ignore
     this.body.setAllowGravity(false);
 
     scene.anims.create({
@@ -19,18 +16,22 @@ export class Objective extends Phaser.Physics.Arcade.Sprite {
     });
     this.anims.play('spin');
 
-    this.sound = scene.sound.add('objective', {
+    this.objective = scene.sound.add('objective', {
+      volume: 0.4,
+      rate: 1,
+    });
+
+    this.victory = scene.sound.add('victory', {
       volume: 0.4,
       rate: 1,
     });
   }
 
-  collect(dialogBox) {
+  collect(dialogBox, objectives, sound) {
     // animation
-    console.log(dialogBox);
     if (this.collecting) return;
     this.collecting = true;
-    this.sound.play();
+    this.objective.play();
     this.scene.tweens.add({
       targets: this,
       alpha: 0,
@@ -45,14 +46,20 @@ export class Objective extends Phaser.Physics.Arcade.Sprite {
     dialogBox.body.setVisible(true);
     dialogBox.link.setVisible(true);
     dialogBox.close.setVisible(true);
+    console.log(objectives.counter);
+    if (objectives.counter >= 2) {
+      sound.removeByKey('background-song');
+      this.victory.play();
+    }
+    objectives.counter += 2;
   }
 }
 
 export default class Objectives extends Phaser.GameObjects.Group {
   constructor(scene, tiles) {
     super(scene);
+    this.counter = -2;
 
-    console.log(this);
     tiles.forEach((tile) => {
       this.add(new Objective(scene, tile));
     });

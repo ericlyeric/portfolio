@@ -41,6 +41,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.audio('jump', ['assets/audio/jump.ogg']);
     this.load.audio('die', ['assets/audio/die.ogg']);
     this.load.audio('objective', ['assets/audio/objective.ogg']);
+    this.load.audio('victory', ['assets/audio/victory.ogg']);
   }
 
   create() {

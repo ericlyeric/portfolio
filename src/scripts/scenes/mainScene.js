@@ -76,6 +76,7 @@ export default class MainScene extends Phaser.Scene {
         textConfig
       );
     }
+
     this.dialogBox1 = new DialogBox(
       this,
       0,
@@ -109,15 +110,26 @@ export default class MainScene extends Phaser.Scene {
       dialogLink.objective3,
       0.43
     );
-    // this.goal = new GoalSprite(this, map.info.filter((el: TilesConfig) => el.type === 'goal')[0])
 
-    // console.log(this.objectives);
+    console.log(
+      this.objectives.children.entries.length + this.objectives.counter
+    );
     this.cameras.main.startFollow(this.player);
     this.physics.add.collider(this.tiles, this.player);
+
     this.physics.add.overlap(
       this.player,
       this.objectives,
-      (player, objective) => objective.collect(this.dialogBox1)
+      (player, objective) =>
+        objective.collect(
+          this[
+            `dialogBox${
+              this.objectives.children.entries.length + this.objectives.counter
+            }`
+          ],
+          this.objectives,
+          this.sound
+        )
     );
 
     // remove the loading screen
