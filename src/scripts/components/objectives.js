@@ -46,7 +46,6 @@ export class Objective extends Phaser.Physics.Arcade.Sprite {
     dialogBox.body.setVisible(true);
     dialogBox.link.setVisible(true);
     dialogBox.close.setVisible(true);
-    console.log(objectives.counter);
     if (objectives.counter >= 2) {
       sound.removeByKey('background-song');
       this.victory.play();

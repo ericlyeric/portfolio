@@ -101,7 +101,7 @@ export class DialogBoxInstructions {
   constructor(scene, x, y, key, text, config) {
     this.frame = new DialogBoxFrame(scene, x, y, key);
     this.body = new DialogBoxBody(scene, x, y, text, config);
-    this.body.setWordWrapWidth(this.frame.width);
+    this.body.setWordWrapWidth(this.frame.width * 1.2);
     this.qr = new DialogBoxImage(scene, x, y, 'qr-code');
 
     this.frame.setVisible(true);

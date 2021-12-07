@@ -111,9 +111,6 @@ export default class MainScene extends Phaser.Scene {
       0.43
     );
 
-    console.log(
-      this.objectives.children.entries.length + this.objectives.counter
-    );
     this.cameras.main.startFollow(this.player);
     this.physics.add.collider(this.tiles, this.player);
 
