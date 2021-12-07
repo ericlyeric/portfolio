@@ -5,7 +5,7 @@ class ControlPlayer extends Phaser.GameObjects.Image {
 
     this.setX(x)
       .setY(y)
-      .setAlpha(0.5)
+      .setAlpha(0.6)
       .setRotation(config.rotation)
       .setScrollFactor(0);
     this.type = config.type;
@@ -70,7 +70,6 @@ export default class Controls {
     // check which pointer pressed which button
     pointers.forEach((pointer) => {
       if (pointer.isDown) {
-        // console.log(pointer.x, pointer.y);
         let hit = buttons.filter((btn) => {
           let x =
             btn.x - this._width / 2 < pointer.x &&
