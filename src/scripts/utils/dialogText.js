@@ -1,8 +1,8 @@
 export const dialogText = {
   pc: 'left/right: ←/→ jump: ↑ or spacebar\n--Press any of the keys mentioned above to start--\n\nTo play on mobile scan the qr code below',
   mobile:
-    'Use the buttons below\n--Tap the arrow buttons below to start--\nChallenge a colleague/friend',
-  objective1: `Hello, I'm Eric.\n\nI am currently on my journey in becoming a software wizard. Aside from my keen interest for technology, I enjoy being active (calisthenics, Brazilian Jiu Jitsu, ice hockey, bouldering, and snowboarding). If I'm not practicing software spells, or exercising, I like to play the guitar; I enjoy most genres of music. For more information about my professional career click on "See Eric's resume" below.`,
+    'Use the buttons below\n--Tap the arrow buttons below to start--\nChallenge a friend, get them to scan the qr code',
+  objective1: `Hello, I'm Eric.\n\nI am currently on my journey to becoming a software wizard. Aside from my keen interest for technology, I enjoy being active (calisthenics, Brazilian Jiu Jitsu, ice hockey, bouldering, and snowboarding). If I'm not practicing software spells, or exercising, I like to play the guitar; I enjoy most genres of music. For more information about my professional career click on "See Eric's resume" below.`,
   objective2: `If you're on LinkedIn feel free to reach out, I would love to connect with you`,
   objective3: `Wow, congratulations for getting to this point, I'm impressed. Feel free to check out my other projects by clicking "See Eric's other projects below"`,
 };
