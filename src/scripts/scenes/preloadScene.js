@@ -1,32 +1,23 @@
+import { IMAGES } from '../utils/constants';
+
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
     super({ key: 'PreloadScene' });
   }
 
   preload() {
-    const images = [
-      'tile-left-ground',
-      'tile-middle-ground',
-      'tile-right-ground',
-      'tile-left-ground-fill',
-      'tile-middle-ground-fill',
-      'tile-right-ground-fill',
-      'tile-left-ground-connect',
-      'tile-right-ground-connect',
-      'tile-left-float',
-      'tile-middle-float',
-      'tile-right-float',
-      'tile-float',
-      'controls',
-      'background',
-      'dialog-box',
-      'dialog-box-big',
-      'qr-code',
-    ];
-    images.forEach((image) => {
+    this._loadImages();
+    this._loadSprites();
+    this._loadAudio();
+  }
+
+  _loadImages() {
+    IMAGES.forEach((image) => {
       this.load.image(image, `assets/images/${image}.png`);
     });
+  }
 
+  _loadSprites() {
     this.load.spritesheet('objective', 'assets/spritesheets/coin.png', {
       frameHeight: 16,
       frameWidth: 16,
@@ -35,7 +26,13 @@ export default class PreloadScene extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 29,
     });
+    this.load.spritesheet('monte', 'assets/spritesheets/monte.png', {
+      frameWidth: 43,
+      frameHeight: 28,
+    });
+  }
 
+  _loadAudio() {
     this.load.audio('background-song', ['assets/audio/background-song.ogg']);
     this.load.audio('footsteps', ['assets/audio/footstep.ogg']);
     this.load.audio('jump', ['assets/audio/jump.ogg']);

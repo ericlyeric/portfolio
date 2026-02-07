@@ -1,3 +1,5 @@
+import { TILE_MAPPINGS } from "../utils/constants";
+
 class Tile extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
@@ -10,16 +12,16 @@ class Tile extends Phaser.Physics.Arcade.Sprite {
     // check what kind of tile
     // should only be able to jump through the float ones
     switch (texture) {
-      case 'tile-left-ground':
-      case 'tile-left-ground-fill':
-      case 'tile-left-ground-connect':
+      case TILE_MAPPINGS.ground.left:
+      case TILE_MAPPINGS.ground.fill.left:
+      case TILE_MAPPINGS.ground.connect.left:
         this.body.checkCollision.down = false;
         this.body.checkCollision.left = true;
         this.body.checkCollision.right = false;
         break;
-      case 'tile-right-ground':
-      case 'tile-right-ground-fill':
-      case 'tile-right-ground-connect':
+      case TILE_MAPPINGS.ground.right:
+      case TILE_MAPPINGS.ground.fill.right:
+      case TILE_MAPPINGS.ground.connect.right:
         this.body.checkCollision.down = false;
         this.body.checkCollision.left = false;
         this.body.checkCollision.right = true;

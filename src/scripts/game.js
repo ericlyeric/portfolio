@@ -1,8 +1,9 @@
 import { Game } from 'phaser';
-import { gameConfig, resizeWindow } from './utils/config';
+import { GAME_CONFIG } from './utils/config';
+import { resizeWindow } from './utils/helper';
 
 window.addEventListener('load', () => {
-  const game = new Game(gameConfig);
+  const game = new Game(GAME_CONFIG);
   window.addEventListener('resize', (event) => {
     resizeWindow({ window: window, game: game });
   });

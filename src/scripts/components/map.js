@@ -1,92 +1,8 @@
-// prettier-ignore
-const level = [
-  '                                                     ',
-  '   P                                                 ',
-  '                                  ^    {//}          ',
-  '                                                  O  ',
-  '                          ^    ^                {//} ',
-  '                                                     ',
-  '                 []       ^                          ',
-  '                [()|]              ^    ^  ^         ',
-  '               [(===>      ^    ^      ^       ^     ',
-  '              [(====>                                ',
-  ' [||||||]    [(=====>                            [|] ',
-  ' <======>  [|(======> O       []              O [(=> ',
-  ' <======>  <========)|]       <>      []    [|||(==> ',
-  ' <======>  <==========>   []  <>      <>    <======> ',
-  ' <======>  <==========>   <>  <>  []  <>    <======> ',
-  ' <======>  <==========>   <>  <>  <>  <>    <======> ',
-  ' <======>  <==========>   <>  <>  <>  <>    <======> ',
-]
+import { LEVEL_DESIGN, LEVEL_MAPPINGS, TILE_SIZE } from '../utils/constants.js';
 
 export class Map {
   constructor() {
-    const TILE_SIZE = 16;
-    const config = {
-      '[': {
-        type: 'tile',
-        texture: 'tile-left-ground',
-      },
-      '|': {
-        type: 'tile',
-        texture: 'tile-middle-ground',
-      },
-      ']': {
-        type: 'tile',
-        texture: 'tile-right-ground',
-      },
-      '{': {
-        type: 'tile',
-        texture: 'tile-left-float',
-      },
-      '/': {
-        type: 'tile',
-        texture: 'tile-middle-float',
-      },
-      '}': {
-        type: 'tile',
-        texture: 'tile-right-float',
-      },
-      '^': {
-        type: 'tile',
-        texture: 'tile-float',
-      },
-      '<': {
-        type: 'tile',
-        texture: 'tile-left-ground-fill',
-      },
-      '=': {
-        type: 'tile',
-        texture: 'tile-middle-ground-fill',
-      },
-      '>': {
-        type: 'tile',
-        texture: 'tile-right-ground-fill',
-      },
-      '(': {
-        type: 'tile',
-        texture: 'tile-left-ground-connect',
-      },
-      ')': {
-        type: 'tile',
-        texture: 'tile-right-ground-connect',
-      },
-      G: {
-        type: 'goal',
-        texture: 'goal',
-      },
-      O: {
-        type: 'objective',
-        texture: 'objective',
-      },
-      P: {
-        type: 'player',
-        texture: 'player',
-      },
-    };
-
-    const map = level;
-
+    const map = LEVEL_DESIGN
     const paddingTop = 32 * TILE_SIZE;
 
     this.size = {
@@ -102,7 +18,7 @@ export class Map {
         const tile = map[j].charAt(i);
         if (tile !== ' ') {
           let info = {
-            ...config[tile.toString()],
+            ...LEVEL_MAPPINGS[tile.toString()],
             x: i * TILE_SIZE,
             y: j * TILE_SIZE + paddingTop,
           };
