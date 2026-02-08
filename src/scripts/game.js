@@ -1,4 +1,4 @@
-import { Game } from 'phaser';
+import { Game } from 'phaser/dist/phaser-arcade-physics.js';
 import { GAME_CONFIG } from './utils/config';
 import { resizeWindow } from './utils/helper';
 

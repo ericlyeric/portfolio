@@ -1,9 +1,8 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
-const JavaScriptObfuscator = require('webpack-obfuscator');
+const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const prod = {
   mode: 'production',
@@ -12,29 +11,49 @@ const prod = {
     chunkFilename: '[name].[contenthash].chunk.js',
   },
   optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            drop_console: true,
+            drop_debugger: true,
+            passes: 2,
+          },
+          mangle: true,
+          output: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
+    usedExports: true, // Tree-shaking: mark used exports
+    sideEffects: false, // Phaser and dependencies have no side effects
     splitChunks: {
+      chunks: 'all',
       cacheGroups: {
-        commons: {
-          filename: '[name].[contenthash].bundle.js',
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          enforce: true,
+          priority: 10,
+          reuseExistingChunk: true,
+        },
+        common: {
+          minChunks: 2,
+          priority: 5,
+          reuseExistingChunk: true,
+          name: 'common',
         },
       },
     },
-    minimizer: [new UglifyJsPlugin()],
   },
   plugins: [
     new CleanWebpackPlugin({
       name: 'Eric Ly | Portfolio',
       cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, '../docs/*.js')],
     }),
-    new JavaScriptObfuscator(
-      {
-        rotateStringArray: true,
-        stringArray: true,
-        // stringArrayEncoding: 'base64', // disabled by default
-        stringArrayThreshold: 0.75,
-      },
-      ['vendors.*.js']
-    ),
   ],
 };
 

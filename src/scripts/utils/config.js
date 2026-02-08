@@ -1,4 +1,4 @@
-import 'phaser';
+import Phaser from 'phaser/dist/phaser-arcade-physics.js';
 import MainScene from '../scenes/mainScene';
 import PreloadScene from '../scenes/preloadScene';
 import { CONFIG } from './constants';
